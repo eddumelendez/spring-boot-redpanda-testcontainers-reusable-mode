@@ -8,6 +8,7 @@ import org.springframework.boot.devtools.restart.RestartScope;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.DependsOn;
 import org.testcontainers.DockerClientFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
@@ -74,6 +75,7 @@ public class ProducerApplicationTests {
 		}
 
 		@Bean
+		@DependsOn("redpandaContainer")
 		GenericContainer<?> redpandaConsole() {
 			return new GenericContainer<>("docker.redpanda.com/redpandadata/console:v2.3.0")
 					.withNetwork(network)
