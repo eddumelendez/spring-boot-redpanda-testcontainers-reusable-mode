@@ -1,3 +1,8 @@
+connect:
+  enabled: true
+  clusters:
+    - name: kafka-connect
+      url: http://connect:8083
 kafka:
   brokers: ["redpanda:19092"]
   schemaRegistry:
