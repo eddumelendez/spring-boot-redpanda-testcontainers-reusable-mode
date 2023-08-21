@@ -1,6 +1,5 @@
 package com.example.producer;
 
-import com.example.container.RedpandaWithExtraListenersContainer;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -15,13 +14,11 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy;
 import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.lifecycle.Startables;
 import org.testcontainers.redpanda.RedpandaContainer;
 import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class ProducerApplicationTests {
@@ -72,10 +69,9 @@ public class ProducerApplicationTests {
 		@ServiceConnection
 		@RestartScope
 		RedpandaContainer redpandaContainer() {
-			return new RedpandaWithExtraListenersContainer("docker.redpanda.com/redpandadata/redpanda:v23.1.10")
-					.withAdditionalListener(() -> "redpanda:19092")
+			return new RedpandaContainer("docker.redpanda.com/redpandadata/redpanda:v23.1.10")
+					.withListener(() -> "redpanda:19092")
 					.withNetwork(this.network)
-					.withNetworkAliases("redpanda")
 					.withReuse(true);
 		}
 

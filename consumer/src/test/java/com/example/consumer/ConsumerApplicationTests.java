@@ -1,6 +1,5 @@
 package com.example.consumer;
 
-import com.example.container.RedpandaWithExtraListenersContainer;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.springframework.boot.SpringApplication;
@@ -62,10 +61,9 @@ public class ConsumerApplicationTests {
         @ServiceConnection
         @RestartScope
         RedpandaContainer redpandaContainer() {
-            return new RedpandaWithExtraListenersContainer("docker.redpanda.com/redpandadata/redpanda:v23.1.10")
-                    .withAdditionalListener(() -> "redpanda:19092")
+            return new RedpandaContainer("docker.redpanda.com/redpandadata/redpanda:v23.1.10")
+                    .withListener(() -> "redpanda:19092")
                     .withNetwork(this.network)
-                    .withNetworkAliases("redpanda")
                     .withReuse(true);
         }
 
